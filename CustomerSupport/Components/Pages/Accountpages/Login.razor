@@ -3,7 +3,7 @@
 @using Domain.Entity
 @using Domain.Interface
 @using Microsoft.AspNetCore.Identity
-
+@using MudBlazor;
 
 @inject IAccountService AccountService;
 @inject NavigationManager NavigationManager;
@@ -12,6 +12,7 @@
 <h1>Login</h1>
 <div class="row">
     <div class="col-md-4">
+        <MudAlert Severity="Severity.Success" Variant="Variant.Filled">The reactor is running at optimum temperature</MudAlert>
         <section>
             <EditForm Model="Input" method="post" OnValidSubmit="OnLogin" FormName="Login">
                 <DataAnnotationsValidator />
@@ -65,7 +66,7 @@
         await SignInManager.PasswordSignInAsync(Input.Email, Input.Password, Input.Remember, false);
 
         NavigationManager.NavigateTo("/");
-
+       
     }
     private sealed class InputModel
     {
