@@ -21,7 +21,7 @@ builder.Services.AddAuthentication()
 
 builder.Services.ConfigureApplicationCookie(options =>
 {
-    options.LoginPath = "/login"; // Adjust the login path as needed
+    options.LoginPath = "/loginpage"; // Adjust the login path as needed
     options.AccessDeniedPath = "/access-denied"; // Adjust the access denied path as needed 
     options.LogoutPath = "/logout"; // Adjust the logout path as needed
 });

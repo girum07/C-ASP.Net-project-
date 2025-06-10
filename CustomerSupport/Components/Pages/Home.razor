@@ -1,7 +1,44 @@
-﻿@page "/"
+﻿@page "/home" 
+@using CustomerSupportUI.Components.Layout
+@layout MainLayout
 
-<PageTitle>Home</PageTitle>
+<div style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; padding: 2rem; background: linear-gradient(to bottom, #f5f7fa, #c3cfe2); color: #333;">
+    <section style="text-align: center; padding: 4rem 2rem; background: #0078d7; color: white; border-radius: 1rem; margin-bottom: 3rem; box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);">
+        <h1 style="font-size: 3rem; margin-bottom: 1rem;">Welcome to Blazor World 🌍</h1>
+        <p style="font-size: 1.2rem; margin-bottom: 2rem;">Your next-gen web experience built with C# & Razor Components.</p>
+        <a href="#features"
+           style="display: inline-block; padding: 0.75rem 1.5rem; background: white; color: #0078d7; border-radius: 999px; font-weight: bold; text-decoration: none; transition: background 0.3s ease, color 0.3s ease;"
+           onmouseover="this.style.background='#005fa3';this.style.color='white';"
+           onmouseout="this.style.background='white';this.style.color='#0078d7';">
+            Explore Features
+        </a>
+    </section>
 
-<h1>Hello, world!</h1>
+    <section id="features" style="text-align: center; margin-bottom: 3rem;">
+        <h2 style="font-size: 2rem; margin-bottom: 2rem;">Why Blazor?</h2>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem; padding: 0 1rem;">
+            <div style="background: white; border-radius: 1rem; padding: 2rem; box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1); transition: transform 0.3s ease;"
+                 onmouseover="this.style.transform='translateY(-10px)';"
+                 onmouseout="this.style.transform='translateY(0)';">
+                <h3>🚀 Fast</h3>
+                <p>Blazor provides fast rendering using WebAssembly and SignalR.</p>
+            </div>
+            <div style="background: white; border-radius: 1rem; padding: 2rem; box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1); transition: transform 0.3s ease;"
+                 onmouseover="this.style.transform='translateY(-10px)';"
+                 onmouseout="this.style.transform='translateY(0)';">
+                <h3>💡 C# Fullstack</h3>
+                <p>Use C# on both the client and server without needing JavaScript.</p>
+            </div>
+            <div style="background: white; border-radius: 1rem; padding: 2rem; box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1); transition: transform 0.3s ease;"
+                 onmouseover="this.style.transform='translateY(-10px)';"
+                 onmouseout="this.style.transform='translateY(0)';">
+                <h3>🎨 Component-Based</h3>
+                <p>Build UIs using reusable and composable Razor components.</p>
+            </div>
+        </div>
+    </section>
 
-Welcome to your new app.
+    <footer style="text-align: center; padding: 2rem; font-size: 0.9rem; color: #666;">
+        <p>© 2025 Blazor World. Built with ❤️ and C#</p>
+    </footer>
+</div>

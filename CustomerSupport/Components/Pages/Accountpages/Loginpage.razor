@@ -1,5 +1,5 @@
-﻿@page "/login"
-@using System.ComponentModel.DataAnnotations
+﻿@page "/"
+@layout EmptyLayout
 @using Domain.Entity
 @using Domain.Interface
 @using Microsoft.AspNetCore.Identity
@@ -13,7 +13,7 @@
     <div class="container-fluid h-custom">
         <div class="row d-flex justify-content-center align-items-center h-100">
             <div class="col-md-9 col-lg-6 col-xl-5">
-                <img src="asset/image/abronal_logo.jfif" class="img-fluid" alt="Sample image" />
+                <img src="asset/image/abronalLogo.png" class="img-fluid" alt="Sample image" />
             </div>
             <div class="col-md-8 col-lg-6 col-xl-4 offset-xl-1">
                 <div class="d-flex flex-row align-items-center justify-content-center justify-content-lg-start">
@@ -75,8 +75,8 @@
         }
         await SignInManager.PasswordSignInAsync(Input.Email, Input.Password, Input.Remember, false);
 
-        NavigationManager.NavigateTo("/");
-       
+        NavigationManager.NavigateTo("/home");
+
     }
     private sealed class InputModel
     {
