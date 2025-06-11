@@ -1,12 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
+﻿
 namespace Domain.Entity
 {
-    internal class Priorty
+    public class Priorty
     {
+        public int PriortyId { get; set; }
+        public string PriortyName { get; set; }
+        public int ExpectedDay { get; set; }
     }
 }
+ 

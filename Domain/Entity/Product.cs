@@ -1,12 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿
 
 namespace Domain.Entity
 {
-    internal class Product
+    public class Product
     {
+        public int ProcuctId { get; set; }
+        public string ProductName { get; set; }
     }
 }
