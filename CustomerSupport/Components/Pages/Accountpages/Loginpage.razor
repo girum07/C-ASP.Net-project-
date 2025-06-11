@@ -4,6 +4,7 @@
 @using Domain.Interface
 @using Microsoft.AspNetCore.Identity
 @using MudBlazor;
+@rendermode InteractiveServer
 
 @inject IAccountService AccountService;
 @inject NavigationManager NavigationManager;
@@ -20,7 +21,7 @@
                     <p class="lead fw-normal mb-0 me-3">Sign in with Email</p>
                 </div>
 
-                <MudAlert Severity="Severity.Success" Variant="Variant.Filled">The reactor is running at optimum temperature</MudAlert>
+               <Alert @ref= "alert"/>
                 <section>
                     <EditForm Model="Input" method="post" OnValidSubmit="OnLogin" FormName="Login">
                         <DataAnnotationsValidator />
@@ -48,7 +49,7 @@
 </section>
   
 @code {
-    [SupplyParameterFromForm]
+    private Alert alert;
     private InputModel Input { get; set; } = new();
 
     // protected override async Task OnInitializedAsync()
@@ -68,14 +69,15 @@
         var verify = await AccountService.VerifyUser(Input.Email, Input.Password);
         if (!verify.IsSuccess)
         {
+            alert.ShowFailed(verify.ErrorMessage);
             // Handle login failure, e.g., show an error message
             return;
         }
         {
         }
-        await SignInManager.PasswordSignInAsync(Input.Email, Input.Password, Input.Remember, false);
+        
 
-        NavigationManager.NavigateTo("/home");
+        NavigationManager.NavigateTo($"/processor/{verify.Data}/{Input.Password}/{Input.Remember}");
 
     }
     private sealed class InputModel
