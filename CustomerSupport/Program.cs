@@ -5,6 +5,8 @@ using Microsoft.AspNetCore.Identity;
 using Domain.Entity;
 using Domain.Interface;
 using MudBlazor.Services;
+using Infrastructure.Service;
+
 
 
 
@@ -34,6 +36,8 @@ builder.Services.AddIdentityCore<User>()
     .AddEntityFrameworkStores<AppDBcontext>()
   .AddSignInManager();
 builder.Services.AddScoped<IAccountService, AccountService>(); // Register your account service 
+ // Register your unit of work service
+builder.Services.AddScoped<ICriteriaService, CriteriaService>(); // Register your criteria service
 
 var app = builder.Build();
 

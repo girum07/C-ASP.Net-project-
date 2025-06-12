@@ -9,11 +9,11 @@ using infrastructure.Data;
 
 #nullable disable
 
-namespace infrastructure.Data.Migrations
+namespace Infrastructure.Migrations
 {
     [DbContext(typeof(AppDBcontext))]
-    [Migration("20250607130852_Intializaton")]
-    partial class Intializaton
+    [Migration("20250612172520_intilization")]
+    partial class intilization
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -24,6 +24,183 @@ namespace infrastructure.Data.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
+
+            modelBuilder.Entity("Domain.Entity.Attachment", b =>
+                {
+                    b.Property<int>("AttachmentID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("AttachmentID"));
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int?>("DisscussionID")
+                        .HasColumnType("int");
+
+                    b.Property<string>("ServerFileName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("TicketID")
+                        .HasColumnType("int");
+
+                    b.Property<string>("filename")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("filesize")
+                        .HasColumnType("int");
+
+                    b.HasKey("AttachmentID");
+
+                    b.HasIndex("DisscussionID");
+
+                    b.HasIndex("TicketID");
+
+                    b.ToTable("Attachments");
+                });
+
+            modelBuilder.Entity("Domain.Entity.Category", b =>
+                {
+                    b.Property<int>("CategoryId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CategoryId"));
+
+                    b.Property<string>("CategoryName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("CategoryId");
+
+                    b.ToTable("Categories");
+                });
+
+            modelBuilder.Entity("Domain.Entity.Disscussion", b =>
+                {
+                    b.Property<int>("DisscussionId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("DisscussionId"));
+
+                    b.Property<DateTime>("Created")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Messsage")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("TicketID")
+                        .HasColumnType("int");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("DisscussionId");
+
+                    b.HasIndex("TicketID");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Disscussions");
+                });
+
+            modelBuilder.Entity("Domain.Entity.Priority", b =>
+                {
+                    b.Property<int>("PriorityId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("PriorityId"));
+
+                    b.Property<int>("ExpectedDays")
+                        .HasColumnType("int");
+
+                    b.Property<string>("PriorityName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("PriorityId");
+
+                    b.ToTable("priorties");
+                });
+
+            modelBuilder.Entity("Domain.Entity.Product", b =>
+                {
+                    b.Property<int>("ProductId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ProductId"));
+
+                    b.Property<string>("ProductName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("ProductId");
+
+                    b.ToTable("Products");
+                });
+
+            modelBuilder.Entity("Domain.Entity.Ticket", b =>
+                {
+                    b.Property<int>("TicketId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("TicketId"));
+
+                    b.Property<string>("AssignedtoUserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("CategoryId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("ExpectedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("PriorityId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ProductId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("RaisedBy")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<DateTime>("RaisedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Summary")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("TicketId");
+
+                    b.HasIndex("AssignedtoUserId");
+
+                    b.HasIndex("PriorityId");
+
+                    b.HasIndex("ProductId");
+
+                    b.HasIndex("RaisedBy");
+
+                    b.ToTable("Tickets");
+                });
 
             modelBuilder.Entity("Domain.Entity.User", b =>
                 {
@@ -229,6 +406,72 @@ namespace infrastructure.Data.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
+            modelBuilder.Entity("Domain.Entity.Attachment", b =>
+                {
+                    b.HasOne("Domain.Entity.Disscussion", "Disscussion")
+                        .WithMany("Attachments")
+                        .HasForeignKey("DisscussionID");
+
+                    b.HasOne("Domain.Entity.Ticket", "Ticket")
+                        .WithMany("Attachments")
+                        .HasForeignKey("TicketID");
+
+                    b.Navigation("Disscussion");
+
+                    b.Navigation("Ticket");
+                });
+
+            modelBuilder.Entity("Domain.Entity.Disscussion", b =>
+                {
+                    b.HasOne("Domain.Entity.Ticket", "Ticket")
+                        .WithMany()
+                        .HasForeignKey("TicketID")
+                        .OnDelete(DeleteBehavior.NoAction);
+
+                    b.HasOne("Domain.Entity.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Ticket");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("Domain.Entity.Ticket", b =>
+                {
+                    b.HasOne("Domain.Entity.User", "AssignedtoUser")
+                        .WithMany()
+                        .HasForeignKey("AssignedtoUserId");
+
+                    b.HasOne("Domain.Entity.Priority", "Priority")
+                        .WithMany()
+                        .HasForeignKey("PriorityId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Domain.Entity.Product", "Product")
+                        .WithMany()
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Domain.Entity.User", "RaisedbyUser")
+                        .WithMany()
+                        .HasForeignKey("RaisedBy")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.Navigation("AssignedtoUser");
+
+                    b.Navigation("Priority");
+
+                    b.Navigation("Product");
+
+                    b.Navigation("RaisedbyUser");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
@@ -278,6 +521,16 @@ namespace infrastructure.Data.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("Domain.Entity.Disscussion", b =>
+                {
+                    b.Navigation("Attachments");
+                });
+
+            modelBuilder.Entity("Domain.Entity.Ticket", b =>
+                {
+                    b.Navigation("Attachments");
                 });
 #pragma warning restore 612, 618
         }
