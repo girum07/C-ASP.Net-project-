@@ -2,6 +2,7 @@
 using Domain.DataTransferObject.Response;
 using Domain.Entity;
 
+
 using Domain.Interface.Repository;
 using Infrastructure.Repository;
 
@@ -46,13 +47,18 @@ namespace Infrastructure.Service
                 TicketId = x.TicketId,
                 Summary = x.Summary,
                 Product = x.Product?.ProductName,
-               // Category = x.Category?.CategoryName,
+                Category = x.Category,
                 Priority = x.Priority?.PriorityName,
                 Status = x.Status,
                 RaisedBy = x.RaisedbyUser?.Email,
                 CreatedDate = x.RaisedDate,
                 ExpectedDate = x.ExpectedDate
             }).ToList();
+        }
+
+        Task<GetTicketsResponse> ITicketService.FindTicket(int ticketId)
+        {
+            throw new NotImplementedException();
         }
     }
 }

@@ -6,6 +6,8 @@ using Domain.Entity;
 using Domain.Interface;
 using MudBlazor.Services;
 using Infrastructure.Service;
+using Domain.Interface.Repository;
+using Infrastructure.Repository;
 
 
 
@@ -23,7 +25,7 @@ builder.Services.AddAuthentication()
 
 builder.Services.ConfigureApplicationCookie(options =>
 {
-    options.LoginPath = "/loginpage"; // Adjust the login path as needed
+    options.LoginPath = "/"; // Adjust the login path as needed
     options.AccessDeniedPath = "/access-denied"; // Adjust the access denied path as needed 
     options.LogoutPath = "/logout"; // Adjust the logout path as needed
 });
@@ -36,9 +38,17 @@ builder.Services.AddIdentityCore<User>()
     .AddEntityFrameworkStores<AppDBcontext>()
   .AddSignInManager();
 builder.Services.AddScoped<IAccountService, AccountService>(); // Register your account service 
- // Register your unit of work service
-builder.Services.AddScoped<ICriteriaService, CriteriaService>(); // Register your criteria service
+                                                               // Register your unit of work service
+                                                               // Register your criteria service
 
+
+
+builder.Services.AddScoped<ITicketRepository, TicketRepository>();
+builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+
+
+builder.Services.AddScoped<ITicketService, TicketService>();
+builder.Services.AddScoped<ICriteriaService, CriteriaService>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

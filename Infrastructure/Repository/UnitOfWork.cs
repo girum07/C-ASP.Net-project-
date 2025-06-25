@@ -1,61 +1,54 @@
 ﻿using Domain.DataTransferObject.Request;
 using Domain.Interface.Repository;
-
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using infrastructure.Data;
 using System.Collections;
 
 namespace Infrastructure.Repository
 {
     public class UnitOfWork : IUnitOfWork
     {
-        private readonly IdentityDbContext context;
-        private Hashtable repositories;
+        private readonly AppDBcontext _context;
+        private readonly ITicketRepository _ticketRepository;
+        private Hashtable _repositories;
 
-        public object TicketsRepository => throw new NotImplementedException();
-
-        ITicketRepository IUnitOfWork.TicketsRepository => throw new NotImplementedException();
-
-        public UnitOfWork(IdentityDbContext context, ITicketRepository ticketRepository)
+        public UnitOfWork(AppDBcontext context, ITicketRepository ticketRepository)
         {
-            this.context = context;
-           
+            _context = context;
+            _ticketRepository = ticketRepository;
         }
+
+        public ITicketRepository TicketsRepository => _ticketRepository;
 
         public async Task<int> SaveChanges()
         {
-            return await context.SaveChangesAsync();
+            return await _context.SaveChangesAsync();
         }
 
         public async Task<bool> SaveChangesReturnBool()
         {
-            return await context.SaveChangesAsync() > 0;
-        }
-
-        public void Dispose()
-        {
-            context.Dispose();
+            return await _context.SaveChangesAsync() > 0;
         }
 
         public IGenericRepository<TEntity> Repository<TEntity>() where TEntity : class
         {
-            if (repositories == null) repositories = new Hashtable();
+            if (_repositories == null)
+                _repositories = new Hashtable();
 
             var type = typeof(TEntity).Name;
 
-            if (!repositories.ContainsKey(type))
+            if (!_repositories.ContainsKey(type))
             {
                 var repositoryType = typeof(GenericRepository<>);
-                var repositoryInstance = Activator.CreateInstance(repositoryType.MakeGenericType(typeof(TEntity)), context);
-
-                repositories.Add(type, repositoryInstance);
+                var repositoryInstance = Activator.CreateInstance(repositoryType.MakeGenericType(typeof(TEntity)), _context);
+                _repositories.Add(type, repositoryInstance);
             }
 
-            return (IGenericRepository<TEntity>)repositories[type];
+            return (IGenericRepository<TEntity>)_repositories[type];
         }
 
-        public IEnumerable<object> GetTickets(GetTicketRequest request)
+        public void Dispose()
         {
-            throw new NotImplementedException();
+            _context.Dispose();
         }
     }
 }

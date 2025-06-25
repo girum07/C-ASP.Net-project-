@@ -2,6 +2,7 @@
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Data;
+using Domain.DataTransferObject.Response;
 
 namespace Domain.Entity
 {
@@ -15,6 +16,7 @@ namespace Domain.Entity
         public int TicketId { get; set; }
         public string Summary { get; set; }  
         public string Description { get; set; }
+       
         public DateTime RaisedDate { get; set; }
         public DateTime ExpectedDate { get; set; }
       
@@ -25,6 +27,8 @@ namespace Domain.Entity
         public int ProductId { get; set; }
         [ForeignKey(nameof(ProductId))]
         public Product Product { get; set; }
+        public string CategoryName { get; set; }
+        [ForeignKey(nameof(CategoryName))]
         public int Category { get; set; }
         [ForeignKey(nameof(Category))]
 

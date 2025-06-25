@@ -1,6 +1,7 @@
 ﻿using Domain.DataTransferObject.Request;
 using Domain.Entity;
 using Domain.Interface.Repository;
+using infrastructure.Data;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -11,7 +12,7 @@ namespace Infrastructure.Repository
 {
     public class TicketRepository : GenericRepository<Ticket>, ITicketRepository
     {
-        public TicketRepository(IdentityDbContext dbContext) : base(dbContext)
+        public TicketRepository(AppDBcontext dbContext) : base(dbContext)
         {
 
         }

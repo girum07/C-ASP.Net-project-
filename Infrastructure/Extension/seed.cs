@@ -14,7 +14,7 @@ namespace Infrastructure.Extension
         public static void GenerateSeed(this ModelBuilder modelBuilder)
         {
             string USER_EMAIL = "abronal@gmail.com";
-
+            
             //create user
             var appUser = new User
             {

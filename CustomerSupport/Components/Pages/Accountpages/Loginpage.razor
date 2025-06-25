@@ -49,34 +49,24 @@
 </section>
   
 @code {
+  
     private Alert alert;
     private InputModel Input { get; set; } = new();
 
-    // protected override async Task OnInitializedAsync()
-    // {
-    //     await AccountService.RegisterUser(new Domain.DataTransferObject.Request.RegisterUserRequest
-    //     {
-    //         Email = "abronal123@gmail.com",
-    //         Role = "Admin"
-    //     }
-
-    //     );
-
-    // }
 
     private async Task OnLogin()
-    {
+    { 
+       
         var verify = await AccountService.VerifyUser(Input.Email, Input.Password);
         if (!verify.IsSuccess)
         {
+            
             alert.ShowFailed(verify.ErrorMessage);
             // Handle login failure, e.g., show an error message
             return;
         }
-        {
-        }
-        
-
+        else
+      
         NavigationManager.NavigateTo($"/processor/{verify.Data}/{Input.Password}/{Input.Remember}");
 
     }

@@ -1,5 +1,6 @@
 ﻿using Domain.Entity;
 using Domain.Interface;
+using Domain.Interface.Repository;
 using Infrastructure.Repository;
 
 
@@ -7,8 +8,8 @@ namespace Infrastructure.Service
 {
     public class CriteriaService : ICriteriaService
     {
-        private readonly UnitOfWork unitofwork;
-        public CriteriaService(UnitOfWork unitofwork)
+        private readonly IUnitOfWork unitofwork;
+        public CriteriaService(IUnitOfWork unitofwork)
         {
             this.unitofwork = unitofwork;
         }

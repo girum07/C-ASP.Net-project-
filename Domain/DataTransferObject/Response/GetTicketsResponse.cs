@@ -20,7 +20,7 @@ namespace Domain.DataTransferObject.Response
         public string Product { get; set; }
         public int ProductId { get; set; }
 
-        public string Category { get; set; }
+        public int Category { get; set; }
         public int CategoryId { get; set; }
 
         public string Priority { get; set; }

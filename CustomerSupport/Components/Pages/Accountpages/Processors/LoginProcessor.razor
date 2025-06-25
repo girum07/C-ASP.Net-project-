@@ -1,8 +1,8 @@
 ﻿@page "/processor/{username}/{password}/{rememberme:bool}"
 @layout EmptyLayout
-
 @using Domain.Entity
 @using Microsoft.AspNetCore.Identity
+@using System.ComponentModel.DataAnnotations
 @inject SignInManager<User> signInManager
 @inject NavigationManager nav
 
